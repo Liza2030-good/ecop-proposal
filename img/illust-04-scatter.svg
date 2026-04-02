@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <!-- 中央分割線 -->
+  <line x1="120" y1="28" x2="120" y2="210" stroke="#006ba1" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.3"/>
+  <!-- NG ラベル -->
+  <text x="60" y="36" text-anchor="middle" font-size="9" font-family="Arial,sans-serif" font-weight="700" fill="#c8dde8" letter-spacing="1.5">WITHOUT</text>
+  <!-- OK ラベル -->
+  <text x="180" y="36" text-anchor="middle" font-size="9" font-family="Arial,sans-serif" font-weight="700" fill="#3EA876" letter-spacing="1.5">WITH FILM</text>
+  <!-- 左: フィルムなし窓 -->
+  <rect x="22" y="48" width="86" height="110" rx="3" fill="#e8f4fa" stroke="#006ba1" stroke-width="1.8"/>
+  <line x1="65" y1="48" x2="65" y2="158" stroke="#006ba1" stroke-width="1.5"/>
+  <line x1="22" y1="103" x2="108" y2="103" stroke="#006ba1" stroke-width="1.5"/>
+  <!-- 衝撃点 -->
+  <circle cx="52" cy="80" r="4" fill="none" stroke="#c8dde8" stroke-width="1.8"/>
+  <!-- ひび割れ -->
+  <line x1="52" y1="80" x2="28" y2="58" stroke="#c8dde8" stroke-width="1.5"/>
+  <line x1="52" y1="80" x2="36" y2="52" stroke="#c8dde8" stroke-width="1.2"/>
+  <line x1="52" y1="80" x2="24" y2="88" stroke="#c8dde8" stroke-width="1.2"/>
+  <line x1="52" y1="80" x2="44" y2="102" stroke="#c8dde8" stroke-width="1.5"/>
+  <line x1="52" y1="80" x2="74" y2="62" stroke="#c8dde8" stroke-width="1.2"/>
+  <line x1="52" y1="80" x2="82" y2="90" stroke="#c8dde8" stroke-width="1.2"/>
+  <line x1="52" y1="80" x2="66" y2="100" stroke="#c8dde8" stroke-width="1"/>
+  <!-- 飛散破片 -->
+  <polygon points="10,94 16,100 8,104" fill="#c8dde8" opacity="0.8"/>
+  <polygon points="8,74 14,78 10,84" fill="#c8dde8" opacity="0.8"/>
+  <polygon points="14,58 20,52 20,60" fill="#c8dde8" opacity="0.8"/>
+  <polygon points="100,66 108,62 108,70" fill="#c8dde8" opacity="0.7"/>
+  <polygon points="106,100 112,96 112,104" fill="#c8dde8" opacity="0.7"/>
+  <!-- 危険マーク -->
+  <path d="M65 170 L50 192 L80 192 Z" stroke="#c8dde8" stroke-width="1.8" stroke-linejoin="round"/>
+  <text x="65" y="188" text-anchor="middle" font-size="12" font-family="Arial,sans-serif" font-weight="700" fill="#c8dde8">!</text>
+  <!-- 右: フィルムあり窓 -->
+  <rect x="132" y="48" width="86" height="110" rx="3" fill="#e8f4fa" stroke="#006ba1" stroke-width="1.8"/>
+  <line x1="175" y1="48" x2="175" y2="158" stroke="#006ba1" stroke-width="1.5"/>
+  <line x1="132" y1="103" x2="218" y2="103" stroke="#006ba1" stroke-width="1.5"/>
+  <!-- フィルム層 -->
+  <rect x="134" y="50" width="82" height="106" rx="2" fill="#006ba1" fill-opacity="0.06" stroke="#3EA876" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.7"/>
+  <!-- ハイライト -->
+  <rect x="138" y="54" width="5" height="24" rx="2.5" fill="white" opacity="0.45" transform="rotate(-8 140.5 66)"/>
+  <!-- ひびあり・飛散なし -->
+  <circle cx="162" cy="80" r="3.5" fill="none" stroke="#c8dde8" stroke-width="1.5" opacity="0.5"/>
+  <line x1="162" y1="80" x2="146" y2="64" stroke="#c8dde8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="162" y1="80" x2="154" y2="100" stroke="#c8dde8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="162" y1="80" x2="178" y2="68" stroke="#c8dde8" stroke-width="1.2" opacity="0.4"/>
+  <!-- チェック -->
+  <circle cx="175" cy="182" r="14" fill="#3EA876" opacity="0.9"/>
+  <path d="M168 182 L173 187 L183 177" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 人物(右・無事) -->
+  <circle cx="205" cy="150" r="6" fill="#006ba1" opacity="0.3"/>
+  <path d="M205 156 L205 170" stroke="#006ba1" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <path d="M199 163 L211 163" stroke="#006ba1" stroke-width="1.8" stroke-linecap="round" opacity="0.3"/>
+</svg>

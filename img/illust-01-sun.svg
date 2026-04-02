@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <!-- 窓枠 -->
+  <rect x="32" y="44" width="110" height="140" rx="3" fill="#e8f4fa" stroke="#006ba1" stroke-width="2"/>
+  <line x1="32" y1="114" x2="142" y2="114" stroke="#006ba1" stroke-width="1.5"/>
+  <line x1="87" y1="44" x2="87" y2="184" stroke="#006ba1" stroke-width="1.5"/>
+  <!-- フィルム層(青みがかった透明感) -->
+  <rect x="34" y="46" width="51" height="66" fill="#006ba1" fill-opacity="0.07"/>
+  <rect x="89" y="46" width="51" height="66" fill="#006ba1" fill-opacity="0.07"/>
+  <!-- フィルムのハイライト -->
+  <rect x="38" y="50" width="5" height="28" rx="2.5" fill="white" opacity="0.45" transform="rotate(-8 40.5 64)"/>
+  <rect x="93" y="50" width="5" height="28" rx="2.5" fill="white" opacity="0.45" transform="rotate(-8 95.5 64)"/>
+  <!-- 太陽(右上) -->
+  <circle cx="190" cy="62" r="20" fill="none" stroke="#3EA876" stroke-width="1.8"/>
+  <circle cx="190" cy="62" r="11" fill="#3EA876" fill-opacity="0.18"/>
+  <!-- 光線 -->
+  <line x1="190" y1="36" x2="190" y2="29" stroke="#3EA876" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="190" y1="88" x2="190" y2="95" stroke="#3EA876" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="164" y1="62" x2="157" y2="62" stroke="#3EA876" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="216" y1="62" x2="223" y2="62" stroke="#3EA876" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="171" y1="43" x2="166" y2="38" stroke="#3EA876" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="209" y1="81" x2="214" y2="86" stroke="#3EA876" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="209" y1="43" x2="214" y2="38" stroke="#3EA876" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="171" y1="81" x2="166" y2="86" stroke="#3EA876" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- UV矢印(窓に向かう) -->
+  <path d="M176 78 L156 96 L150 90" stroke="#3EA876" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 反射矢印(ブルー) -->
+  <path d="M148 88 L140 72" stroke="#c8dde8" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 2"/>
+  <!-- UVテキスト -->
+  <text x="176" y="118" font-size="11" fill="#3EA876" font-family="Arial,sans-serif" font-weight="700" letter-spacing="1.5">UV</text>
+  <!-- 室内ソファ -->
+  <rect x="40" y="160" width="58" height="18" rx="5" fill="#c8dde8" stroke="#006ba1" stroke-width="1.2"/>
+  <rect x="37" y="152" width="64" height="12" rx="4" fill="#e8f4fa" stroke="#006ba1" stroke-width="1.2"/>
+  <!-- 人物シルエット -->
+  <circle cx="68" cy="144" r="8" fill="#006ba1"/>
+  <path d="M60 152 Q60 162 62 165" stroke="#006ba1" stroke-width="3" stroke-linecap="round"/>
+  <path d="M76 152 Q76 162 74 165" stroke="#006ba1" stroke-width="3" stroke-linecap="round"/>
+  <!-- 窓外枠 -->
+  <rect x="32" y="44" width="110" height="140" rx="3" fill="none" stroke="#006ba1" stroke-width="2.2"/>
+</svg>

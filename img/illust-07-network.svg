@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <!-- 日本地図 本州 -->
+  <path d="M55 108 Q52 94 58 80 Q66 66 80 60 Q94 56 108 60 Q122 64 134 74 Q144 84 146 98 Q148 112 140 122 Q130 134 116 138 Q100 142 86 136 Q70 128 60 116 Z" fill="#e8f4fa" stroke="#006ba1" stroke-width="1.8"/>
+  <!-- 北海道 -->
+  <path d="M126 56 Q136 44 150 46 Q162 50 160 62 Q156 72 144 70 Q132 66 128 58 Z" fill="#e8f4fa" stroke="#006ba1" stroke-width="1.5"/>
+  <!-- 九州 -->
+  <path d="M52 122 Q44 130 42 142 Q44 152 54 150 Q64 146 64 136 Q64 126 56 120 Z" fill="#e8f4fa" stroke="#006ba1" stroke-width="1.4"/>
+  <!-- 四国 -->
+  <path d="M86 136 Q80 144 84 152 Q92 156 102 150 Q106 142 98 136 Z" fill="#e8f4fa" stroke="#006ba1" stroke-width="1.2"/>
+  <!-- 沖縄 -->
+  <ellipse cx="36" cy="172" rx="7" ry="4.5" fill="#e8f4fa" stroke="#006ba1" stroke-width="1"/>
+  <ellipse cx="28" cy="180" rx="5" ry="3.5" fill="#e8f4fa" stroke="#006ba1" stroke-width="0.8"/>
+  <!-- 接続破線 -->
+  <line x1="96" y1="96" x2="66" y2="114" stroke="#006ba1" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.35"/>
+  <line x1="96" y1="96" x2="128" y2="84" stroke="#006ba1" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.35"/>
+  <line x1="96" y1="96" x2="144" y2="58" stroke="#006ba1" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.35"/>
+  <line x1="96" y1="96" x2="50" y2="134" stroke="#006ba1" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.35"/>
+  <line x1="96" y1="96" x2="92" y2="142" stroke="#006ba1" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.35"/>
+  <line x1="96" y1="96" x2="120" y2="116" stroke="#006ba1" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.35"/>
+  <!-- 拠点ドット -->
+  <circle cx="96" cy="96" r="7" fill="#006ba1"/>
+  <circle cx="96" cy="96" r="3.5" fill="white"/>
+  <circle cx="66" cy="114" r="5" fill="#3EA876"/>
+  <circle cx="128" cy="84" r="5" fill="#3EA876"/>
+  <circle cx="144" cy="58" r="5" fill="#3EA876"/>
+  <circle cx="50" cy="134" r="5" fill="#3EA876"/>
+  <circle cx="92" cy="142" r="5" fill="#3EA876"/>
+  <circle cx="120" cy="116" r="4.5" fill="#3EA876"/>
+  <!-- 500社バッジ -->
+  <rect x="154" y="140" width="72" height="46" rx="10" fill="#006ba1"/>
+  <text x="190" y="162" text-anchor="middle" font-size="22" font-family="Arial,sans-serif" font-weight="700" fill="white">500</text>
+  <text x="190" y="178" text-anchor="middle" font-size="11" font-family="Arial,sans-serif" fill="white" opacity="0.9">社加盟</text>
+  <!-- 小人(各拠点イメージ) -->
+  <circle cx="66" cy="108" r="2.5" fill="#006ba1" opacity="0.25"/>
+  <circle cx="128" cy="78" r="2.5" fill="#006ba1" opacity="0.25"/>
+  <circle cx="144" cy="52" r="2.5" fill="#006ba1" opacity="0.25"/>
+</svg>

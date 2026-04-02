@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <!-- 建物断面外壁 -->
+  <rect x="28" y="60" width="184" height="140" rx="3" fill="#e8f4fa" stroke="#006ba1" stroke-width="2"/>
+  <!-- 屋根 -->
+  <polygon points="18,60 120,22 222,60" fill="#e8f4fa" stroke="#006ba1" stroke-width="2" stroke-linejoin="round"/>
+  <!-- 断面中心線 -->
+  <line x1="120" y1="60" x2="120" y2="200" stroke="#006ba1" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/>
+  <!-- BEFORE / AFTER ラベル -->
+  <text x="73" y="78" text-anchor="middle" font-size="8" font-family="Arial,sans-serif" font-weight="700" fill="#3EA876" letter-spacing="1.5" opacity="0.7">BEFORE</text>
+  <text x="167" y="78" text-anchor="middle" font-size="8" font-family="Arial,sans-serif" font-weight="700" fill="#006ba1" letter-spacing="1.5" opacity="0.7">AFTER</text>
+  <!-- 左窓(フィルムなし) -->
+  <rect x="44" y="88" width="52" height="62" rx="3" fill="#e8f4fa" stroke="#006ba1" stroke-width="1.8"/>
+  <line x1="70" y1="88" x2="70" y2="150" stroke="#006ba1" stroke-width="1.5"/>
+  <line x1="44" y1="119" x2="96" y2="119" stroke="#006ba1" stroke-width="1.5"/>
+  <!-- 太陽(左上) -->
+  <circle cx="28" cy="42" r="18" fill="none" stroke="#3EA876" stroke-width="1.6"/>
+  <circle cx="28" cy="42" r="10" fill="#3EA876" fill-opacity="0.2"/>
+  <!-- 熱波(左窓へ) -->
+  <path d="M38 98 Q44 93 50 98 Q56 103 62 98" stroke="#3EA876" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M36 110 Q42 105 48 110 Q54 115 60 110" stroke="#3EA876" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <!-- 熱が入る矢印 -->
+  <path d="M30 105 L42 105" stroke="#3EA876" stroke-width="1.8" stroke-linecap="round"/>
+  <polygon points="42,102 48,105 42,108" fill="#3EA876"/>
+  <!-- 右窓(フィルムあり) -->
+  <rect x="144" y="88" width="52" height="62" rx="3" fill="#e8f4fa" stroke="#006ba1" stroke-width="1.8"/>
+  <line x1="170" y1="88" x2="170" y2="150" stroke="#006ba1" stroke-width="1.5"/>
+  <line x1="144" y1="119" x2="196" y2="119" stroke="#006ba1" stroke-width="1.5"/>
+  <!-- フィルム層 -->
+  <rect x="146" y="90" width="48" height="58" rx="2" fill="#006ba1" fill-opacity="0.08" stroke="#006ba1" stroke-width="1" stroke-dasharray="3 2" opacity="0.5"/>
+  <rect x="150" y="94" width="5" height="22" rx="2.5" fill="white" opacity="0.4" transform="rotate(-8 152.5 105)"/>
+  <!-- 熱ブロック -->
+  <line x1="130" y1="105" x2="142" y2="105" stroke="#3EA876" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+  <line x1="140" y1="98" x2="140" y2="112" stroke="#006ba1" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- エアコン(右側室内) -->
+  <rect x="154" y="158" width="32" height="9" rx="4" fill="#c8dde8" stroke="#006ba1" stroke-width="1.2"/>
+  <path d="M158 168 Q157 174 158 178" stroke="#c8dde8" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+  <path d="M166 168 Q165 174 166 178" stroke="#c8dde8" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+  <path d="M174 168 Q173 174 174 178" stroke="#c8dde8" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+  <!-- 人物シルエット(右室内) -->
+  <circle cx="196" cy="166" r="7" fill="#006ba1" opacity="0.35"/>
+  <path d="M196 173 L196 188" stroke="#006ba1" stroke-width="2.5" stroke-linecap="round" opacity="0.35"/>
+  <path d="M190 180 L202 180" stroke="#006ba1" stroke-width="2 " stroke-linecap="round" opacity="0.35"/>
+  <!-- 省エネ葉マーク -->
+  <path d="M196 88 Q204 80 202 94 Q196 94 196 88 Z" fill="#3EA876" opacity="0.7"/>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <!-- 建物外壁 -->
+  <rect x="50" y="52" width="140" height="148" rx="3" fill="#e8f4fa" stroke="#006ba1" stroke-width="2"/>
+  <!-- 屋根 -->
+  <polygon points="40,52 120,18 200,52" fill="#e8f4fa" stroke="#006ba1" stroke-width="2" stroke-linejoin="round"/>
+  <!-- 窓 -->
+  <rect x="72" y="74" width="96" height="86" rx="3" fill="#e8f4fa" stroke="#006ba1" stroke-width="2"/>
+  <line x1="120" y1="74" x2="120" y2="160" stroke="#006ba1" stroke-width="1.8"/>
+  <line x1="72" y1="117" x2="168" y2="117" stroke="#006ba1" stroke-width="1.8"/>
+  <!-- フィルム層 -->
+  <rect x="74" y="76" width="44" height="39" fill="#006ba1" fill-opacity="0.06"/>
+  <rect x="122" y="76" width="44" height="39" fill="#006ba1" fill-opacity="0.06"/>
+  <rect x="74" y="119" width="44" height="39" fill="#006ba1" fill-opacity="0.06"/>
+  <rect x="122" y="119" width="44" height="39" fill="#006ba1" fill-opacity="0.06"/>
+  <!-- フィルムハイライト -->
+  <rect x="78" y="80" width="4" height="18" rx="2" fill="white" opacity="0.5" transform="rotate(-8 80 89)"/>
+  <rect x="126" y="80" width="4" height="18" rx="2" fill="white" opacity="0.5" transform="rotate(-8 128 89)"/>
+  <!-- 不審者シルエット(外、左側) -->
+  <circle cx="30" cy="110" r="9" fill="#1a2e3a" opacity="0.3"/>
+  <path d="M30 119 L30 140" stroke="#1a2e3a" stroke-width="2.5" stroke-linecap="round" opacity="0.3"/>
+  <path d="M22 128 L38 128" stroke="#1a2e3a" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <path d="M30 140 L24 152" stroke="#1a2e3a" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <path d="M30 140 L36 152" stroke="#1a2e3a" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <!-- 不審者の道具(バール) -->
+  <line x1="38" y1="126" x2="52" y2="116" stroke="#1a2e3a" stroke-width="2.5" stroke-linecap="round" opacity="0.3"/>
+  <!-- 盾アイコン(窓上部中央) -->
+  <path d="M120 58 L136 63 L136 76 Q136 86 120 92 Q104 86 104 76 L104 63 Z" fill="#3EA876" opacity="0.9"/>
+  <path d="M113 74 L118 79 L128 68" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- ブロックX(窓際) -->
+  <line x1="56" y1="114" x2="68" y2="126" stroke="#006ba1" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <line x1="68" y1="114" x2="56" y2="126" stroke="#006ba1" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <!-- 室内人物(右奥) -->
+  <circle cx="150" cy="140" r="6" fill="#006ba1" opacity="0.3"/>
+  <path d="M150 146 L150 162" stroke="#006ba1" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <path d="M144 154 L156 154" stroke="#006ba1" stroke-width="1.8" stroke-linecap="round" opacity="0.3"/>
+  <!-- ドア -->
+  <rect x="98" y="168" width="44" height="32" rx="2" fill="#c8dde8" stroke="#006ba1" stroke-width="1.5"/>
+  <circle cx="138" cy="185" r="2.5" fill="#006ba1" opacity="0.6"/>
+  <!-- SECURITY テキスト -->
+  <text x="120" y="212" text-anchor="middle" font-size="9" font-family="Arial,sans-serif" font-weight="700" fill="#006ba1" letter-spacing="2" opacity="0.6">SECURITY</text>
+</svg>
