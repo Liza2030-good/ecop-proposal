@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECOP | 窓ガラスフィルム施工 – プロトタイプ提案 v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --primary:       #006ba1;
+  --primary-dark:  #004d73;
+  --primary-light: #e8f4fa;
+  --green:         #3EA876;
+  --green-light:   #eaf7f1;
+  --accent:        #F5A623;
+  --text:          #1a2e3a;
+  --text-muted:    #5a7a8a;
+  --bg:            #fafcfd;
+  --border:        #d6e8f0;
+  --font: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+a { text-decoration:none; color:inherit; }
+img { max-width:100%; display:block; }
+
+/* ============================================================
+   NOISE TEXTURE
+   ============================================================ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   WINDOW OVERLAY — 窓が開く演出
+   ============================================================ */
+#window-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #fafcfd;
+  display: flex;
+  align-items: stretch;
+}
+.win-half {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #fafcfd;
+  position: relative;
+}
+.win-half--left  { justify-content: flex-end; }
+.win-half--right { justify-content: flex-start; }
+
+/* 窓枠SVG */
+.win-frame {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.win-half--left  .win-frame { right: -1px; }
+.win-half--right .win-frame { left: -1px; }
+
+/* 開くアニメーション */
+@keyframes slide-left  { to { transform: translateX(-100%); } }
+@keyframes slide-right { to { transform: translateX(100%); } }
+@keyframes fade-out    { to { opacity: 0; pointer-events: none; } }
+
+#window-overlay.open .win-half--left  { animation: slide-left  0.9s 0.3s ease-in-out forwards; }
+#window-overlay.open .win-half--right { animation: slide-right 0.9s 0.3s ease-in-out forwards; }
+#window-overlay.open { animation: fade-out 0.3s 1.15s forwards; }
+
+/* ============================================================
+   CONTAINER / SECTION
+   ============================================================ */
+.container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+}
+
+section {
+  position: relative;
+  z-index: 2;
+}
+
+/* セクション間の余白 */
+.section-gap {
+  padding-top: 128px;
+  padding-bottom: 128px;
+}
+@media (max-width: 768px) {
+  .section-gap { padding-top: 72px; padding-bottom: 72px; }
+}
+
+/* セクションラベル */
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* 見出し */
+.section-title {
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 900;
+  line-height: 1.3;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.section-desc {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 540px;
+  line-height: 1.9;
+}
+
+/* ============================================================
+   HEADER / NAV
+   ============================================================ */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(250,252,253,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+@media (max-width: 768px) {
+  .header-inner { padding: 0 20px; }
+}
+.logo {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: 0.06em;
+}
+.logo span {
+  color: var(--green);
+}
+.nav {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.nav a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+.nav a:hover { color: var(--primary); }
+.nav-cta {
+  background: var(--primary);
+  color: white !important;
+  padding: 9px 20px;
+  border-radius: 6px;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--primary-dark) !important; color: white !important; }
+@media (max-width: 768px) {
+  .nav { display: none; }
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero {
+  background: var(--primary-light);
+  padding-top: 160px;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+@media (max-width: 768px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+    gap: 48px;
+  }
+}
+.hero-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 18px;
+  display: block;
+}
+.hero-title {
+  font-size: clamp(34px, 4.5vw, 58px);
+  font-weight: 900;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+.hero-title em {
+  font-style: normal;
+  color: var(--primary);
+}
+.hero-sub {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 2;
+  margin-bottom: 36px;
+  max-width: 440px;
+}
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 36px;
+  align-items: flex-end;
+}
+.hero-stat-num {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+}
+.hero-stat-unit {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-left: 2px;
+}
+.hero-stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+}
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 8px;
+  transition: filter 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 1.5px solid var(--primary);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.btn-secondary:hover { background: var(--primary-light); }
+
+/* ヒーロー右側 窓イラスト */
+.hero-visual {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  padding-bottom: 0;
+}
+.window-illust {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ============================================================
+   WAVE DIVIDER
+   ============================================================ */
+.wave {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 2;
+  position: relative;
+}
+.wave img {
+  width: 100%;
+  height: 80px;
+  object-fit: fill;
+}
+
+/* ============================================================
+   MARQUEE (流れるイラスト帯)
+   ============================================================ */
+#marquee-section {
+  background: var(--green-light);
+  padding: 40px 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+.marquee-fade-left,
+.marquee-fade-right {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 3;
+  pointer-events: none;
+}
+.marquee-fade-left  { left: 0;  background: linear-gradient(to right,  var(--green-light), transparent); }
+.marquee-fade-right { right: 0; background: linear-gradient(to left, var(--green-light), transparent); }
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 35s linear infinite;
+}
+.marquee-track:hover {
+  animation-duration: 85s;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+.marquee-item {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 36px;
+}
+.marquee-item img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+.marquee-item span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-top: 10px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   SERVICE (5つの効果)
+   ============================================================ */
+#service {
+  background: var(--bg);
+}
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  margin-top: 56px;
+}
+@media (max-width: 1024px) {
+  .service-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .service-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+@media (max-width: 480px) {
+  .service-grid { grid-template-columns: 1fr; }
+}
+.service-card {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 20px 24px;
+  text-align: center;
+  transition: border-color 0.25s;
+}
+.service-card:hover {
+  border-color: var(--green);
+}
+.service-card img {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 18px;
+  object-fit: contain;
+}
+.service-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.service-card p {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+/* ============================================================
+   WORKS
+   ============================================================ */
+#works {
+  background: var(--primary-light);
+}
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+@media (max-width: 768px) {
+  .works-grid { grid-template-columns: 1fr; }
+}
+.works-card {
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+  border: 1px solid var(--border);
+}
+.works-thumb {
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.works-thumb span {
+  font-size: 12px;
+  color: white;
+  font-weight: 500;
+  opacity: 0.7;
+  letter-spacing: 0.04em;
+}
+.works-meta {
+  padding: 18px 20px;
+}
+.works-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--primary);
+  background: var(--primary-light);
+  border-radius: 4px;
+  padding: 3px 10px;
+  margin-bottom: 8px;
+}
+.works-meta h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   ACADEMY (FC事業)
+   ============================================================ */
+#academy {
+  background: var(--bg);
+}
+.academy-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .academy-inner { grid-template-columns: 1fr; gap: 48px; }
+}
+.academy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green-light);
+  border: 1.5px solid var(--green);
+  border-radius: 100px;
+  padding: 6px 16px 6px 10px;
+  margin-bottom: 24px;
+}
+.academy-badge-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  color: white;
+  flex-shrink: 0;
+}
+.academy-badge-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+}
+.academy-features {
+  list-style: none;
+  margin: 24px 0 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.academy-features li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+}
+.academy-features li::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 10l4 4 6-7' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: contain;
+}
+.academy-visual {
+  display: flex;
+  justify-content: center;
+}
+.academy-visual img {
+  width: 100%;
+  max-width: 320px;
+}
+
+/* ============================================================
+   CTA SECTION
+   ============================================================ */
+#cta {
+  background: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%);
+  padding: 120px 0;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+.cta-title {
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 900;
+  color: white;
+  margin-bottom: 14px;
+  line-height: 1.35;
+}
+.cta-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.72);
+  margin-bottom: 44px;
+  line-height: 1.9;
+}
+.cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px 36px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+.btn-cta-primary:hover { filter: brightness(1.1); }
+.btn-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px 36px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-cta-secondary:hover { background: rgba(255,255,255,0.1); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--primary-dark);
+  padding: 72px 0 40px;
+  position: relative;
+  z-index: 2;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+.footer-brand-name {
+  font-size: 18px;
+  font-weight: 900;
+  color: white;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+.footer-brand-name span { color: var(--green); }
+.footer-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.9;
+  max-width: 260px;
+}
+.footer-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 16px;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-links li a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  transition: color 0.2s;
+}
+.footer-links li a:hover { color: white; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 28px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+}
+
+/* ============================================================
+   SCROLL FADE-IN
+   ============================================================ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-up { opacity: 1; transform: none; transition: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     WINDOW OVERLAY — 窓が開く演出
+     ============================================================ -->
+<div id="window-overlay">
+  <div class="win-half win-half--left">
+    <!-- 左パネル: 窓枠の左半分 -->
+    <div class="win-frame">
+      <svg width="120" height="280" viewBox="0 0 120 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- 縦桟 -->
+        <line x1="118" y1="10" x2="118" y2="270" stroke="#006ba1" stroke-width="3" stroke-linecap="round"/>
+        <!-- 横桟 -->
+        <line x1="10" y1="140" x2="118" y2="140" stroke="#006ba1" stroke-width="2" stroke-linecap="round"/>
+        <!-- 上枠 -->
+        <line x1="10" y1="10" x2="118" y2="10" stroke="#006ba1" stroke-width="3" stroke-linecap="round"/>
+        <!-- 下枠 -->
+        <line x1="10" y1="270" x2="118" y2="270" stroke="#006ba1" stroke-width="3" stroke-linecap="round"/>
+        <!-- 左枠 -->
+        <line x1="10" y1="10" x2="10" y2="270" stroke="#006ba1" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+        <!-- ガラス面(上) -->
+        <rect x="12" y="12" width="104" height="126" fill="#e8f4fa" opacity="0.7"/>
+        <!-- ガラスハイライト(上) -->
+        <rect x="22" y="22" width="8" height="60" rx="4" fill="white" opacity="0.5" transform="rotate(-6 26 52)"/>
+        <!-- ガラス面(下) -->
+        <rect x="12" y="142" width="104" height="126" fill="#e8f4fa" opacity="0.7"/>
+        <!-- ガラスハイライト(下) -->
+        <rect x="22" y="154" width="8" height="60" rx="4" fill="white" opacity="0.5" transform="rotate(-6 26 184)"/>
+        <!-- ロック金具 -->
+        <rect x="108" y="132" width="10" height="16" rx="3" fill="#006ba1" opacity="0.6"/>
+      </svg>
+    </div>
+  </div>
+  <div class="win-half win-half--right">
+    <!-- 右パネル: 窓枠の右半分 -->
+    <div class="win-frame">
+      <svg width="120" height="280" viewBox="0 0 120 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- 縦桟 -->
+        <line x1="2" y1="10" x2="2" y2="270" stroke="#006ba1" stroke-width="3" stroke-linecap="round"/>
+        <!-- 横桟 -->
+        <line x1="2" y1="140" x2="110" y2="140" stroke="#006ba1" stroke-width="2" stroke-linecap="round"/>
+        <!-- 上枠 -->
+        <line x1="2" y1="10" x2="110" y2="10" stroke="#006ba1" stroke-width="3" stroke-linecap="round"/>
+        <!-- 下枠 -->
+        <line x1="2" y1="270" x2="110" y2="270" stroke="#006ba1" stroke-width="3" stroke-linecap="round"/>
+        <!-- 右枠 -->
+        <line x1="110" y1="10" x2="110" y2="270" stroke="#006ba1" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+        <!-- ガラス面(上) -->
+        <rect x="4" y="12" width="104" height="126" fill="#e8f4fa" opacity="0.7"/>
+        <!-- ガラスハイライト(上) -->
+        <rect x="14" y="22" width="8" height="60" rx="4" fill="white" opacity="0.5" transform="rotate(-6 18 52)"/>
+        <!-- ガラス面(下) -->
+        <rect x="4" y="142" width="104" height="126" fill="#e8f4fa" opacity="0.7"/>
+        <!-- ガラスハイライト(下) -->
+        <rect x="14" y="154" width="8" height="60" rx="4" fill="white" opacity="0.5" transform="rotate(-6 18 184)"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">ECOP<span>.</span></div>
+    <nav class="nav">
+      <a href="#service">サービス</a>
+      <a href="#works">施工実績</a>
+      <a href="#academy">FC加盟</a>
+      <a href="#cta" class="nav-cta">無料相談</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="hero">
+  <div class="hero-inner">
+    <!-- 左: テキスト -->
+    <div class="hero-text">
+      <span class="hero-kicker">Window Film Specialist</span>
+      <h1 class="hero-title">窓が変われば、<br><em>暮らしが変わる</em></h1>
+      <p class="hero-sub">紫外線カット・遮熱・防犯・飛散防止・環境配慮。<br>窓ガラスフィルムのすべてに対応するプロフェッショナル。</p>
+      <div class="hero-stats">
+        <div>
+          <div><span class="hero-stat-num">500</span><span class="hero-stat-unit">社</span></div>
+          <div class="hero-stat-label">全国加盟ネットワーク</div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="#cta" class="btn-primary">無料で相談する</a>
+        <a href="#service" class="btn-secondary">サービスを見る</a>
+      </div>
+    </div>
+    <!-- 右: 窓イラスト(開いた後の状態) -->
+    <div class="hero-visual">
+      <svg class="window-illust" viewBox="0 0 400 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- 窓枠外側 -->
+        <rect x="40" y="30" width="320" height="400" rx="6" fill="#e8f4fa" stroke="#006ba1" stroke-width="3"/>
+        <!-- 縦桟(中央) -->
+        <line x1="200" y1="30" x2="200" y2="430" stroke="#006ba1" stroke-width="2.5"/>
+        <!-- 横桟 -->
+        <line x1="40" y1="230" x2="360" y2="230" stroke="#006ba1" stroke-width="2.5"/>
+        <!-- ガラス面 x4 -->
+        <rect x="43" y="33" width="154" height="194" fill="#e8f4fa" opacity="0.6"/>
+        <rect x="203" y="33" width="154" height="194" fill="#e8f4fa" opacity="0.6"/>
+        <rect x="43" y="233" width="154" height="194" fill="#e8f4fa" opacity="0.6"/>
+        <rect x="203" y="233" width="154" height="194" fill="#e8f4fa" opacity="0.6"/>
+        <!-- ガラスハイライト -->
+        <rect x="58" y="48" width="12" height="80" rx="6" fill="white" opacity="0.55" transform="rotate(-6 64 88)"/>
+        <rect x="218" y="48" width="12" height="80" rx="6" fill="white" opacity="0.55" transform="rotate(-6 224 88)"/>
+        <rect x="58" y="248" width="12" height="80" rx="6" fill="white" opacity="0.45" transform="rotate(-6 64 288)"/>
+        <rect x="218" y="248" width="12" height="80" rx="6" fill="white" opacity="0.45" transform="rotate(-6 224 288)"/>
+        <!-- フィルム光沢ライン -->
+        <rect x="43" y="33" width="154" height="194" fill="#006ba1" fill-opacity="0.04"/>
+        <rect x="203" y="33" width="154" height="194" fill="#006ba1" fill-opacity="0.04"/>
+        <!-- 窓の外(景色: 遠景) -->
+        <ellipse cx="200" cy="380" rx="140" ry="32" fill="#3EA876" fill-opacity="0.12"/>
+        <!-- 木(左) -->
+        <rect x="76" y="280" width="8" height="80" rx="4" fill="#c8dde8" opacity="0.6"/>
+        <ellipse cx="80" cy="268" rx="28" ry="30" fill="#3EA876" opacity="0.18"/>
+        <!-- 木(右) -->
+        <rect x="316" y="288" width="8" height="72" rx="4" fill="#c8dde8" opacity="0.6"/>
+        <ellipse cx="320" cy="276" rx="24" ry="26" fill="#3EA876" opacity="0.18"/>
+        <!-- 太陽(左上エリア) -->
+        <circle cx="110" cy="100" r="28" fill="#3EA876" fill-opacity="0.1" stroke="#3EA876" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <circle cx="110" cy="100" r="16" fill="#3EA876" fill-opacity="0.15"/>
+        <!-- ロック金具 -->
+        <rect x="192" y="224" width="16" height="12" rx="3" fill="#006ba1" opacity="0.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 波形ディバイダー(上) -->
+<div class="wave" style="margin-top:-2px; position:relative; z-index:3;">
+  <img src="img/glass-line-top.svg" alt="" aria-hidden="true">
+</div>
+
+<!-- ============================================================
+     MARQUEE
+     ============================================================ -->
+<section id="marquee-section">
+  <div class="marquee-fade-left" aria-hidden="true"></div>
+  <div class="marquee-fade-right" aria-hidden="true"></div>
+  <div class="marquee-track" id="marqueeTrack" aria-label="施工効果イラスト一覧">
+    <!-- 1周分 -->
+    <div class="marquee-item"><img src="img/illust-01-sun.svg" alt="紫外線カット"><span>紫外線カット</span></div>
+    <div class="marquee-item"><img src="img/illust-02-heat.svg" alt="遮熱・省エネ"><span>遮熱・省エネ</span></div>
+    <div class="marquee-item"><img src="img/illust-03-security.svg" alt="防犯対策"><span>防犯対策</span></div>
+    <div class="marquee-item"><img src="img/illust-04-scatter.svg" alt="飛散防止"><span>飛散防止</span></div>
+    <div class="marquee-item"><img src="img/illust-05-eco.svg" alt="環境にやさしい"><span>環境にやさしい</span></div>
+    <div class="marquee-item"><img src="img/illust-06-academy.svg" alt="窓フィルムアカデミー"><span>アカデミー</span></div>
+    <div class="marquee-item"><img src="img/illust-07-network.svg" alt="全国ネットワーク"><span>全国ネットワーク</span></div>
+    <!-- 2周分(無限ループ用) -->
+    <div class="marquee-item" aria-hidden="true"><img src="img/illust-01-sun.svg" alt=""><span>紫外線カット</span></div>
+    <div class="marquee-item" aria-hidden="true"><img src="img/illust-02-heat.svg" alt=""><span>遮熱・省エネ</span></div>
+    <div class="marquee-item" aria-hidden="true"><img src="img/illust-03-security.svg" alt=""><span>防犯対策</span></div>
+    <div class="marquee-item" aria-hidden="true"><img src="img/illust-04-scatter.svg" alt=""><span>飛散防止</span></div>
+    <div class="marquee-item" aria-hidden="true"><img src="img/illust-05-eco.svg" alt=""><span>環境にやさしい</span></div>
+    <div class="marquee-item" aria-hidden="true"><img src="img/illust-06-academy.svg" alt=""><span>アカデミー</span></div>
+    <div class="marquee-item" aria-hidden="true"><img src="img/illust-07-network.svg" alt=""><span>全国ネットワーク</span></div>
+  </div>
+</section>
+
+<!-- 波形ディバイダー(下) -->
+<div class="wave" style="position:relative; z-index:3; background: var(--bg);">
+  <img src="img/glass-line-bottom.svg" alt="" aria-hidden="true">
+</div>
+
+<!-- ============================================================
+     SERVICE — 5つの効果
+     ============================================================ -->
+<section id="service" class="section-gap">
+  <div class="container">
+    <span class="section-label fade-up">Service</span>
+    <h2 class="section-title fade-up">窓フィルムが叶える<br>5つの快適</h2>
+    <p class="section-desc fade-up">暮らしや働く環境を守り、快適にする。ECOPの窓ガラスフィルムは、一枚のガラスから可能性を広げます。</p>
+    <div class="service-grid">
+      <div class="service-card fade-up">
+        <img src="img/illust-01-sun.svg" alt="紫外線カット">
+        <h3>紫外線カット</h3>
+        <p>有害UV-A・UV-Bをカット。家具の日焼け防止にも。室内環境を健やかに保ちます。</p>
+      </div>
+      <div class="service-card fade-up">
+        <img src="img/illust-02-heat.svg" alt="遮熱・省エネ">
+        <h3>遮熱・省エネ</h3>
+        <p>夏の強烈な日差しを遮断。冷房効率を高めてエネルギーコストを削減します。</p>
+      </div>
+      <div class="service-card fade-up">
+        <img src="img/illust-03-security.svg" alt="防犯対策">
+        <h3>防犯対策</h3>
+        <p>飛散防止性能と目隠し効果で侵入を抑止。ご家族の安全を窓から守ります。</p>
+      </div>
+      <div class="service-card fade-up">
+        <img src="img/illust-04-scatter.svg" alt="飛散防止">
+        <h3>飛散防止</h3>
+        <p>地震・台風でガラスが割れてもフィルムが破片を保持。二次被害を防ぎます。</p>
+      </div>
+      <div class="service-card fade-up">
+        <img src="img/illust-05-eco.svg" alt="環境にやさしい">
+        <h3>環境にやさしい</h3>
+        <p>省エネ効果でCO2排出量を削減。既存ガラスに貼るだけで環境負荷を低減します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WORKS — 施工実績
+     ============================================================ -->
+<section id="works" class="section-gap">
+  <div class="container">
+    <span class="section-label fade-up">Works</span>
+    <h2 class="section-title fade-up">施工実績</h2>
+    <p class="section-desc fade-up">オフィス・住宅・店舗など、多様な空間での施工実績をご紹介します。</p>
+    <div class="works-grid">
+      <div class="works-card fade-up">
+        <div class="works-thumb">
+          <span>施工写真をここに配置</span>
+        </div>
+        <div class="works-meta">
+          <span class="works-label">オフィスビル</span>
+          <h3>東京都内 大型ガラス張りオフィス<br>遮熱フィルム施工</h3>
+        </div>
+      </div>
+      <div class="works-card fade-up">
+        <div class="works-thumb" style="background: linear-gradient(135deg, #e8f4fa 0%, #3EA876 100%);">
+          <span>施工写真をここに配置</span>
+        </div>
+        <div class="works-meta">
+          <span class="works-label">住宅</span>
+          <h3>神奈川県 戸建て住宅<br>UVカット・目隠しフィルム施工</h3>
+        </div>
+      </div>
+      <div class="works-card fade-up">
+        <div class="works-thumb" style="background: linear-gradient(135deg, #eaf7f1 0%, #006ba1 100%);">
+          <span>施工写真をここに配置</span>
+        </div>
+        <div class="works-meta">
+          <span class="works-label">店舗</span>
+          <h3>商業施設 ショーウィンドウ<br>装飾・飛散防止フィルム施工</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ACADEMY — FC事業
+     ============================================================ -->
+<section id="academy" class="section-gap">
+  <div class="container">
+    <div class="academy-inner">
+      <!-- テキスト左 -->
+      <div class="fade-up">
+        <span class="section-label">Academy</span>
+        <div class="academy-badge">
+          <div class="academy-badge-dot">500</div>
+          <span class="academy-badge-text">社が加盟する全国ネットワーク</span>
+        </div>
+        <h2 class="section-title">窓フィルムアカデミー<br>FC加盟募集中</h2>
+        <p class="section-desc">未経験からでも始められる、窓ガラスフィルム施工のフランチャイズ。充実した研修と全国ネットワークで独立開業をサポートします。</p>
+        <ul class="academy-features">
+          <li>未経験・異業種からでもOK</li>
+          <li>充実した研修プログラム</li>
+          <li>低初期費用での開業</li>
+          <li>全国500社のネットワーク支援</li>
+        </ul>
+        <a href="#cta" class="btn-secondary">加盟について問い合わせる</a>
+      </div>
+      <!-- イラスト右 -->
+      <div class="academy-visual fade-up">
+        <img src="img/illust-06-academy.svg" alt="窓フィルムアカデミー">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA
+     ============================================================ -->
+<section id="cta">
+  <div class="container" style="text-align:center;">
+    <h2 class="cta-title">まずは無料でご相談ください</h2>
+    <p class="cta-sub">お見積もりから施工完了まで、専門スタッフが丁寧にサポートします。<br>施工会社・FC加盟のご相談もお気軽にどうぞ。</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-cta-primary">無料で相談する</a>
+      <a href="#" class="btn-cta-secondary">FC加盟を相談する</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">ECOP<span>.</span></div>
+        <p class="footer-desc">窓ガラスフィルム施工の専門家として、住宅・オフィス・店舗の快適な環境づくりをサポートします。</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Service</div>
+        <ul class="footer-links">
+          <li><a href="#service">紫外線カット</a></li>
+          <li><a href="#service">遮熱・省エネ</a></li>
+          <li><a href="#service">防犯対策</a></li>
+          <li><a href="#service">飛散防止</a></li>
+          <li><a href="#service">環境配慮</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">FC加盟</div>
+        <ul class="footer-links">
+          <li><a href="#academy">窓フィルムアカデミーとは</a></li>
+          <li><a href="#academy">加盟の流れ</a></li>
+          <li><a href="#academy">研修プログラム</a></li>
+          <li><a href="#cta">加盟相談</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; ECOP. All rights reserved. — このページはCrowdWorksコンペ提案用プロトタイプです。
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* --- 1. 窓が開く演出 --- */
+window.addEventListener('load', () => {
+  const overlay = document.getElementById('window-overlay');
+  // prefers-reduced-motion 対応
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) {
+    overlay.style.display = 'none';
+    return;
+  }
+  requestAnimationFrame(() => {
+    overlay.classList.add('open');
+  });
+  // animationend が overlay 自身の fade-out のタイミングで発火 → display:none
+  overlay.addEventListener('animationend', (e) => {
+    if (e.target === overlay) {
+      overlay.style.display = 'none';
+    }
+  });
+});
+
+/* --- 2. marquee: 画面外で停止 --- */
+(function () {
+  const track = document.getElementById('marqueeTrack');
+  if (!track) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      track.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+    });
+  }, { threshold: 0 });
+  io.observe(track);
+})();
+
+/* --- 3. scroll fade-up --- */
+(function () {
+  const els = document.querySelectorAll('.fade-up');
+  if (!els.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
