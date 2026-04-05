@@ -20,6 +20,7 @@
   --text:          #1a2e3a;
   --text-muted:    #5a7a8a;
   --bg:            #fafcfd;
+  --bg-alt:        #f4f8f6;
   --border:        #cde8da;
   --font: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
 }
@@ -53,7 +54,7 @@ body::before {
 }
 
 /* ============================================================
-   WINDOW OVERLAY — 窓が開く演出
+   WINDOW OVERLAY
    ============================================================ */
 #window-overlay {
   position: fixed;
@@ -70,7 +71,6 @@ body::before {
 }
 .win-half--left  { display: flex; align-items: center; justify-content: flex-end; }
 .win-half--right { display: flex; align-items: center; justify-content: flex-start; }
-
 .win-frame {
   position: absolute;
   top: 50%;
@@ -79,11 +79,9 @@ body::before {
 }
 .win-half--left  .win-frame { right: -1px; }
 .win-half--right .win-frame { left: -1px; }
-
 @keyframes slide-left  { to { transform: translateX(-100%); } }
 @keyframes slide-right { to { transform: translateX(100%); } }
 @keyframes fade-out    { to { opacity: 0; pointer-events: none; } }
-
 #window-overlay.open .win-half--left  { animation: slide-left  0.9s 0.4s cubic-bezier(.4,0,.2,1) forwards; }
 #window-overlay.open .win-half--right { animation: slide-right 0.9s 0.4s cubic-bezier(.4,0,.2,1) forwards; }
 #window-overlay.open { animation: fade-out 0.2s 1.25s forwards; }
@@ -105,20 +103,21 @@ section { position: relative; z-index: 2; }
 @media (max-width: 768px) { .section-gap { padding-top: 72px; padding-bottom: 72px; } }
 
 .section-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--primary);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   display: block;
 }
 .section-title {
-  font-size: clamp(26px, 3vw, 38px);
+  font-size: clamp(30px, 3.5vw, 46px);
   font-weight: 900;
-  line-height: 1.3;
+  line-height: 1.25;
   color: var(--text);
-  margin-bottom: 20px;
+  margin-bottom: 22px;
+  letter-spacing: -0.01em;
 }
 .section-desc {
   font-size: 16px;
@@ -231,10 +230,10 @@ section { position: relative; z-index: 2; }
 @media (max-width: 768px) { .hamburger { display: flex; } }
 
 /* ============================================================
-   HERO
+   HERO — proposal-a: gradient background
    ============================================================ */
 #hero {
-  background: var(--primary-light);
+  background: linear-gradient(180deg, var(--primary-light) 0%, #f0faf5 40%, #fafcfd 100%);
   padding-top: 160px;
   padding-bottom: 0;
   overflow: hidden;
@@ -286,41 +285,49 @@ section { position: relative; z-index: 2; }
   align-items: flex-end;
 }
 .hero-stat-num {
-  font-size: 32px;
+  font-size: clamp(3rem, 5vw, 5rem);
   font-weight: 900;
   color: var(--primary);
   line-height: 1;
 }
 .hero-stat-unit {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--primary);
-  margin-left: 2px;
+  margin-left: 4px;
 }
 .hero-stat-label {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   font-weight: 500;
-  margin-top: 4px;
+  margin-top: 6px;
   letter-spacing: 0.04em;
 }
 .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
 
+/* ============================================================
+   BUTTONS — enhanced with gradients & animations
+   ============================================================ */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
   font-size: 15px;
   font-weight: 700;
   padding: 14px 28px;
   border-radius: 8px;
-  transition: filter 0.2s;
+  transition: transform 0.25s, box-shadow 0.25s, filter 0.25s;
   border: none;
   cursor: pointer;
+  box-shadow: 0 4px 14px rgba(62,168,118,0.3);
 }
-.btn-primary:hover { filter: brightness(1.08); }
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(62,168,118,0.4);
+  filter: brightness(1.06);
+}
 .btn-secondary {
   display: inline-flex;
   align-items: center;
@@ -332,10 +339,10 @@ section { position: relative; z-index: 2; }
   padding: 14px 28px;
   border-radius: 8px;
   border: 1.5px solid var(--primary);
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.25s;
   cursor: pointer;
 }
-.btn-secondary:hover { background: var(--primary-light); }
+.btn-secondary:hover { background: var(--primary-light); transform: scale(1.03); }
 
 .hero-visual {
   display: flex;
@@ -348,7 +355,7 @@ section { position: relative; z-index: 2; }
 }
 
 /* ============================================================
-   WAVE DIVIDER（ガラスライン）
+   WAVE DIVIDER
    ============================================================ */
 .wave-divider {
   display: block;
@@ -365,10 +372,10 @@ section { position: relative; z-index: 2; }
 }
 
 /* ============================================================
-   MARQUEE
+   MARQUEE — proposal-a: gradient bg + text-shadow
    ============================================================ */
 #marquee-section {
-  background: var(--blue-light);
+  background: linear-gradient(135deg, var(--blue-light) 0%, #d6eef8 100%);
   padding: 40px 0;
   overflow: hidden;
   position: relative;
@@ -414,12 +421,13 @@ section { position: relative; z-index: 2; }
   margin-top: 10px;
   letter-spacing: 0.06em;
   white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.06);
 }
 
 /* ============================================================
-   SERVICE
+   SERVICE — proposal-a: alt background
    ============================================================ */
-#service { background: var(--bg); }
+#service { background: #f8f9fa; }
 .service-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -435,9 +443,13 @@ section { position: relative; z-index: 2; }
   border-radius: 12px;
   padding: 28px 20px 24px;
   text-align: center;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
-.service-card:hover { border-color: var(--primary); }
+.service-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 8px 24px rgba(62,168,118,0.1);
+  transform: translateY(-2px);
+}
 .service-card img {
   width: 120px;
   height: 120px;
@@ -457,7 +469,7 @@ section { position: relative; z-index: 2; }
 }
 
 /* ============================================================
-   WORKS
+   WORKS — photo overlay
    ============================================================ */
 #works { background: var(--primary-light); }
 .works-grid {
@@ -473,10 +485,11 @@ section { position: relative; z-index: 2; }
   background: white;
   border: 1px solid var(--border);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
 }
 .works-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
 }
 .works-thumb {
   aspect-ratio: 4/3;
@@ -497,7 +510,27 @@ section { position: relative; z-index: 2; }
   transition: transform 0.4s ease;
 }
 .works-card:hover .works-thumb img {
-  transform: scale(1.04);
+  transform: scale(1.06);
+}
+/* Overlay with gradient + label */
+.works-thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(30,80,55,0.55) 0%, rgba(30,80,55,0.25) 50%, rgba(30,80,55,0.6) 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 16px 18px;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+.works-card:hover .works-thumb::after {
+  opacity: 0;
 }
 .works-thumb-inner {
   position: relative;
@@ -607,7 +640,82 @@ section { position: relative; z-index: 2; }
 }
 
 /* ============================================================
-   CTA
+   TESTIMONIALS
+   ============================================================ */
+#testimonials {
+  background: var(--bg-alt);
+  padding-top: 128px;
+  padding-bottom: 128px;
+}
+@media (max-width: 768px) { #testimonials { padding-top: 72px; padding-bottom: 72px; } }
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 56px;
+}
+@media (max-width: 768px) { .testimonials-grid { grid-template-columns: 1fr; } }
+.testimonial-card {
+  background: white;
+  border-radius: 14px;
+  padding: 36px 28px 28px;
+  position: relative;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.testimonial-quote {
+  position: absolute;
+  top: -18px;
+  left: 24px;
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--primary);
+  opacity: 0.18;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.testimonial-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+.testimonial-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.testimonial-role {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   CTA — enhanced with pulse animation
    ============================================================ */
 #cta {
   background: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -617,11 +725,12 @@ section { position: relative; z-index: 2; }
   z-index: 2;
 }
 .cta-title {
-  font-size: clamp(24px, 3.5vw, 40px);
+  font-size: clamp(26px, 4vw, 44px);
   font-weight: 900;
   color: white;
   margin-bottom: 14px;
-  line-height: 1.35;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 .cta-sub {
   font-size: 15px;
@@ -639,17 +748,27 @@ section { position: relative; z-index: 2; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent) 0%, #e6951a 100%);
   color: white;
   font-size: 16px;
   font-weight: 700;
-  padding: 16px 36px;
-  border-radius: 8px;
+  padding: 18px 40px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
-  transition: filter 0.2s;
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 6px 20px rgba(245,166,35,0.35);
+  animation: cta-pulse 2.5s ease-in-out infinite;
 }
-.btn-cta-primary:hover { filter: brightness(1.1); }
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 6px 20px rgba(245,166,35,0.35); }
+  50% { box-shadow: 0 8px 32px rgba(245,166,35,0.55); }
+}
+.btn-cta-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 28px rgba(245,166,35,0.5);
+  animation: none;
+}
 .btn-cta-secondary {
   display: inline-flex;
   align-items: center;
@@ -658,13 +777,13 @@ section { position: relative; z-index: 2; }
   color: white;
   font-size: 16px;
   font-weight: 700;
-  padding: 16px 36px;
-  border-radius: 8px;
+  padding: 18px 40px;
+  border-radius: 10px;
   border: 1.5px solid rgba(255,255,255,0.5);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.25s;
 }
-.btn-cta-secondary:hover { background: rgba(255,255,255,0.1); }
+.btn-cta-secondary:hover { background: rgba(255,255,255,0.12); transform: scale(1.03); }
 
 /* ============================================================
    FOOTER
@@ -741,7 +860,7 @@ footer {
 }
 
 /* ============================================================
-   HERO STAGGERED FADE-IN (窓演出後)
+   HERO STAGGERED FADE-IN
    ============================================================ */
 .hero-stagger {
   opacity: 0;
@@ -756,12 +875,19 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .hero-stagger { opacity: 1; transform: none; }
 }
+
+/* ============================================================
+   COUNTER ANIMATION HELPER
+   ============================================================ */
+.counter-num {
+  font-variant-numeric: tabular-nums;
+}
 </style>
 </head>
 <body>
 
 <!-- ============================================================
-     WINDOW OVERLAY — 窓が開く演出
+     WINDOW OVERLAY
      ============================================================ -->
 <div id="window-overlay">
   <div class="win-half win-half--left">
@@ -826,7 +952,7 @@ footer {
       <p class="hero-sub hero-stagger">紫外線カット・遮熱・防犯・飛散防止・環境配慮。<br>窓ガラスフィルムのすべてに対応するプロフェッショナル。</p>
       <div class="hero-stats hero-stagger">
         <div>
-          <div><span class="hero-stat-num">500</span><span class="hero-stat-unit">社</span></div>
+          <div><span class="hero-stat-num counter-num" data-target="500">0</span><span class="hero-stat-unit">社</span></div>
           <div class="hero-stat-label">全国加盟ネットワーク</div>
         </div>
       </div>
@@ -836,48 +962,37 @@ footer {
       </div>
     </div>
     <div class="hero-visual">
-      <!-- 窓イラスト（外に緑が見える） -->
       <svg class="window-illust" viewBox="0 0 400 460" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- 窓枠 -->
         <rect x="40" y="30" width="320" height="400" rx="6" fill="#eaf7f1" stroke="#3EA876" stroke-width="3"/>
         <line x1="200" y1="30" x2="200" y2="430" stroke="#3EA876" stroke-width="2.5"/>
         <line x1="40" y1="230" x2="360" y2="230" stroke="#3EA876" stroke-width="2.5"/>
-        <!-- ガラス4面 -->
         <rect x="43" y="33" width="154" height="194" fill="#eaf7f1" opacity="0.55"/>
         <rect x="203" y="33" width="154" height="194" fill="#eaf7f1" opacity="0.55"/>
         <rect x="43" y="233" width="154" height="194" fill="#eaf7f1" opacity="0.55"/>
         <rect x="203" y="233" width="154" height="194" fill="#eaf7f1" opacity="0.55"/>
-        <!-- フィルム光沢 -->
         <rect x="43" y="33" width="154" height="194" fill="#3EA876" fill-opacity="0.04"/>
         <rect x="203" y="33" width="154" height="194" fill="#3EA876" fill-opacity="0.04"/>
-        <!-- ガラスハイライト -->
         <rect x="58" y="48" width="10" height="80" rx="5" fill="white" opacity="0.55" transform="rotate(-6 63 88)"/>
         <rect x="218" y="48" width="10" height="80" rx="5" fill="white" opacity="0.55" transform="rotate(-6 223 88)"/>
         <rect x="58" y="248" width="10" height="80" rx="5" fill="white" opacity="0.45" transform="rotate(-6 63 288)"/>
         <rect x="218" y="248" width="10" height="80" rx="5" fill="white" opacity="0.45" transform="rotate(-6 223 288)"/>
-        <!-- 窓外の景色 -->
-        <!-- 空 -->
         <rect x="43" y="233" width="314" height="194" fill="#e8f5ed" opacity="0.5"/>
-        <!-- 木 -->
         <rect x="76" y="300" width="8" height="80" rx="4" fill="#2d7a5a" opacity="0.4"/>
         <ellipse cx="80" cy="285" rx="30" ry="32" fill="#3EA876" opacity="0.22"/>
         <ellipse cx="70" cy="298" rx="18" ry="20" fill="#3EA876" opacity="0.2"/>
         <rect x="308" y="308" width="8" height="72" rx="4" fill="#2d7a5a" opacity="0.4"/>
         <ellipse cx="312" cy="293" rx="26" ry="28" fill="#3EA876" opacity="0.22"/>
-        <!-- 地面 -->
         <ellipse cx="200" cy="420" rx="140" ry="20" fill="#3EA876" fill-opacity="0.1"/>
-        <!-- 太陽(左上) -->
         <circle cx="108" cy="100" r="26" fill="#3EA876" fill-opacity="0.1" stroke="#3EA876" stroke-width="1.5" stroke-dasharray="4 4"/>
         <circle cx="108" cy="100" r="14" fill="#3EA876" fill-opacity="0.18"/>
-        <!-- ロック金具 -->
         <rect x="192" y="224" width="16" height="12" rx="3" fill="#3EA876" opacity="0.45"/>
       </svg>
     </div>
   </div>
 </section>
 
-<!-- ガラスライン（hero → marquee） -->
-<div class="wave-divider" style="background: #e8f4fa; margin-top: -2px;">
+<!-- wave divider -->
+<div class="wave-divider" style="background: var(--blue-light); margin-top: -2px;">
   <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,0 L1440,0 L1440,24
       C1360,36 1300,54 1200,44
@@ -904,7 +1019,7 @@ footer {
     <div class="marquee-item"><img src="img/illust-05-eco.svg" alt="環境にやさしい"><span>環境にやさしい</span></div>
     <div class="marquee-item"><img src="img/illust-06-academy.svg" alt="アカデミー"><span>アカデミー</span></div>
     <div class="marquee-item"><img src="img/illust-07-network.svg" alt="全国ネットワーク"><span>全国ネットワーク</span></div>
-    <!-- ループ用 -->
+    <!-- loop -->
     <div class="marquee-item" aria-hidden="true"><img src="img/illust-01-sun.svg" alt=""><span>紫外線カット</span></div>
     <div class="marquee-item" aria-hidden="true"><img src="img/illust-02-heat.svg" alt=""><span>遮熱・省エネ</span></div>
     <div class="marquee-item" aria-hidden="true"><img src="img/illust-03-security.svg" alt=""><span>防犯対策</span></div>
@@ -915,8 +1030,8 @@ footer {
   </div>
 </section>
 
-<!-- ガラスライン（marquee → service） -->
-<div class="wave-divider" style="background: var(--bg);">
+<!-- wave divider -->
+<div class="wave-divider" style="background: #f8f9fa;">
   <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,0 L1440,0 L1440,24
       C1380,16 1300,40 1200,34
@@ -977,7 +1092,7 @@ footer {
     <p class="section-desc fade-up">オフィス・住宅・店舗など、多様な空間での施工実績をご紹介します。御社の施工写真への差し替えも可能です。</p>
     <div class="works-grid">
       <div class="works-card fade-up">
-        <div class="works-thumb">
+        <div class="works-thumb" data-label="Office Building">
           <img src="https://film.company-ecop.jp/wp-content/themes/theme_2025/img/CASE4-1.webp" alt="大型商業施設 遮熱フィルム施工">
         </div>
         <div class="works-meta">
@@ -986,7 +1101,7 @@ footer {
         </div>
       </div>
       <div class="works-card fade-up">
-        <div class="works-thumb">
+        <div class="works-thumb" data-label="Residential">
           <img src="https://film.company-ecop.jp/wp-content/themes/theme_2025/img/CASE1-1.webp" alt="タワーマンション UVカット・目隠しフィルム施工">
         </div>
         <div class="works-meta">
@@ -995,7 +1110,7 @@ footer {
         </div>
       </div>
       <div class="works-card fade-up">
-        <div class="works-thumb">
+        <div class="works-thumb" data-label="Commercial">
           <img src="https://film.company-ecop.jp/wp-content/themes/theme_2025/img/ECOP5.webp" alt="ホテル 装飾・飛散防止フィルム施工">
         </div>
         <div class="works-meta">
@@ -1031,6 +1146,52 @@ footer {
       </div>
       <div class="academy-visual fade-up">
         <img src="img/illust-06-academy.svg" alt="窓フィルムアカデミー">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+     ============================================================ -->
+<section id="testimonials">
+  <div class="container">
+    <span class="section-label fade-up">Voice</span>
+    <h2 class="section-title fade-up">お客様の声</h2>
+    <p class="section-desc fade-up">ECOPの施工をご利用いただいたお客様からの声をご紹介します。</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">オフィスの西日がひどく悩んでいましたが、遮熱フィルム施工後は冷房効率が格段に上がりました。電気代も約15%削減でき、従業員からも好評です。</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">T</div>
+          <div>
+            <div class="testimonial-name">田中 様</div>
+            <div class="testimonial-role">IT企業 総務担当</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">小さい子どもがいるので、飛散防止フィルムを全窓に施工していただきました。地震の際も安心感が違います。UVカットで家具の色褪せも防げています。</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">S</div>
+          <div>
+            <div class="testimonial-name">鈴木 様</div>
+            <div class="testimonial-role">住宅オーナー</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">店舗のショーウィンドウに装飾フィルムを施工。デザイン性と防犯性を両立でき、お客様の目を引く外観になりました。集客にも効果を感じています。</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">M</div>
+          <div>
+            <div class="testimonial-name">村田 様</div>
+            <div class="testimonial-role">カフェ経営者</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1090,7 +1251,7 @@ footer {
      JAVASCRIPT
      ============================================================ -->
 <script>
-/* --- 0. ハンバーガーメニュー --- */
+/* --- 0. hamburger --- */
 (function () {
   const btn = document.getElementById('hamburgerBtn');
   const nav = document.getElementById('mainNav');
@@ -1107,7 +1268,7 @@ footer {
   });
 })();
 
-/* --- 1. 窓が開く演出 + hero stagger --- */
+/* --- 1. window overlay + hero stagger --- */
 window.addEventListener('load', () => {
   const overlay = document.getElementById('window-overlay');
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -1128,7 +1289,7 @@ window.addEventListener('load', () => {
   });
 });
 
-/* --- 2. marquee: 画面外で停止 --- */
+/* --- 2. marquee: pause off-screen --- */
 (function () {
   const track = document.getElementById('marqueeTrack');
   if (!track) return;
@@ -1153,6 +1314,32 @@ window.addEventListener('load', () => {
     });
   }, { threshold: 0.1 });
   els.forEach(el => io.observe(el));
+})();
+
+/* --- 4. counter animation --- */
+(function () {
+  const counters = document.querySelectorAll('.counter-num[data-target]');
+  if (!counters.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        const duration = 1800;
+        const startTime = performance.now();
+        function update(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(target * eased);
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+        io.unobserve(el);
+      }
+    });
+  }, { threshold: 0.3 });
+  counters.forEach(c => io.observe(c));
 })();
 </script>
 </body>
