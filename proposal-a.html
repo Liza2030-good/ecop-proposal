@@ -178,6 +178,57 @@ section { position: relative; z-index: 2; }
 }
 .nav-cta:hover { background: var(--primary-dark) !important; }
 @media (max-width: 768px) { .nav { display: none; } }
+.nav.nav--open {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: rgba(250,252,253,0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px 20px;
+  gap: 0;
+  z-index: 99;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+.nav.nav--open a {
+  padding: 12px 0;
+  font-size: 15px;
+  border-bottom: 1px solid var(--border);
+}
+.nav.nav--open a:last-child {
+  border-bottom: none;
+  margin-top: 8px;
+  text-align: center;
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.25s, opacity 0.25s;
+  transform-origin: center;
+}
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media (max-width: 768px) { .hamburger { display: flex; } }
 
 /* ============================================================
    HERO
@@ -421,20 +472,43 @@ section { position: relative; z-index: 2; }
   overflow: hidden;
   background: white;
   border: 1px solid var(--border);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.works-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 .works-thumb {
   aspect-ratio: 4/3;
-  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  background: var(--primary-light);
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px dashed var(--primary);
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
 }
-.works-thumb span {
-  font-size: 12px;
-  color: white;
-  font-weight: 500;
-  opacity: 0.75;
-  letter-spacing: 0.04em;
+.works-thumb::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary-light) 0%, rgba(62,168,118,0.08) 100%);
+}
+.works-thumb-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.works-thumb-inner span {
+  font-size: 11px;
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 .works-meta { padding: 18px 20px; }
 .works-label {
@@ -661,6 +735,23 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .fade-up { opacity: 1; transform: none; transition: none; }
 }
+
+/* ============================================================
+   HERO STAGGERED FADE-IN (窓演出後)
+   ============================================================ */
+.hero-stagger {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.hero-stagger.hero-stagger--in {
+  animation: hero-stagger-in 0.6s ease forwards;
+}
+@keyframes hero-stagger-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-stagger { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
@@ -708,12 +799,15 @@ footer {
 <header class="site-header">
   <div class="header-inner">
     <div class="logo">ECOP<span>.</span></div>
-    <nav class="nav">
+    <nav class="nav" id="mainNav">
       <a href="#service">サービス</a>
       <a href="#works">施工実績</a>
       <a href="#academy">FC加盟</a>
       <a href="#cta" class="nav-cta">無料相談</a>
     </nav>
+    <button class="hamburger" id="hamburgerBtn" aria-expanded="false" aria-controls="mainNav" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
@@ -723,16 +817,16 @@ footer {
 <section id="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <span class="hero-kicker">Window Film Specialist</span>
-      <h1 class="hero-title">窓が変われば、<br><em>暮らしが変わる。</em></h1>
-      <p class="hero-sub">紫外線カット・遮熱・防犯・飛散防止・環境配慮。<br>窓ガラスフィルムのすべてに対応するプロフェッショナル。</p>
-      <div class="hero-stats">
+      <span class="hero-kicker hero-stagger">Window Film Specialist</span>
+      <h1 class="hero-title hero-stagger">窓が変われば、<br><em>暮らしが変わる。</em></h1>
+      <p class="hero-sub hero-stagger">紫外線カット・遮熱・防犯・飛散防止・環境配慮。<br>窓ガラスフィルムのすべてに対応するプロフェッショナル。</p>
+      <div class="hero-stats hero-stagger">
         <div>
           <div><span class="hero-stat-num">500</span><span class="hero-stat-unit">社</span></div>
           <div class="hero-stat-label">全国加盟ネットワーク</div>
         </div>
       </div>
-      <div class="hero-actions">
+      <div class="hero-actions hero-stagger">
         <a href="#cta" class="btn-primary">無料で相談する</a>
         <a href="#service" class="btn-secondary">サービスを見る</a>
       </div>
@@ -879,21 +973,57 @@ footer {
     <p class="section-desc fade-up">オフィス・住宅・店舗など、多様な空間での施工実績をご紹介します。御社の施工写真への差し替えも可能です。</p>
     <div class="works-grid">
       <div class="works-card fade-up">
-        <div class="works-thumb"><span>施工写真をここに配置</span></div>
+        <div class="works-thumb">
+          <div class="works-thumb-inner">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="6" y="6" width="36" height="36" rx="3" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <line x1="24" y1="6" x2="24" y2="42" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
+              <line x1="6" y1="24" x2="42" y2="24" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
+              <circle cx="24" cy="22" r="5" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.7"/>
+              <path d="M10 38 Q18 30 24 33 Q30 36 38 28" stroke="var(--primary)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+              <circle cx="33" cy="14" r="3" fill="var(--primary)" opacity="0.25"/>
+            </svg>
+            <span>施工写真</span>
+          </div>
+        </div>
         <div class="works-meta">
           <span class="works-label">オフィスビル</span>
           <h3>東京都内 大型ガラス張りオフィス<br>遮熱フィルム施工</h3>
         </div>
       </div>
       <div class="works-card fade-up">
-        <div class="works-thumb" style="background: linear-gradient(135deg, #eaf7f1 0%, #3EA876 100%);"><span>施工写真をここに配置</span></div>
+        <div class="works-thumb">
+          <div class="works-thumb-inner">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="6" y="6" width="36" height="36" rx="3" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <line x1="24" y1="6" x2="24" y2="42" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
+              <line x1="6" y1="24" x2="42" y2="24" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
+              <circle cx="24" cy="22" r="5" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.7"/>
+              <path d="M10 38 Q18 30 24 33 Q30 36 38 28" stroke="var(--primary)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+              <circle cx="33" cy="14" r="3" fill="var(--primary)" opacity="0.25"/>
+            </svg>
+            <span>施工写真</span>
+          </div>
+        </div>
         <div class="works-meta">
           <span class="works-label">住宅</span>
           <h3>神奈川県 戸建て住宅<br>UVカット・目隠しフィルム施工</h3>
         </div>
       </div>
       <div class="works-card fade-up">
-        <div class="works-thumb" style="background: linear-gradient(135deg, #e8f4fa 0%, #006ba1 100%);"><span>施工写真をここに配置</span></div>
+        <div class="works-thumb">
+          <div class="works-thumb-inner">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="6" y="6" width="36" height="36" rx="3" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <line x1="24" y1="6" x2="24" y2="42" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
+              <line x1="6" y1="24" x2="42" y2="24" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
+              <circle cx="24" cy="22" r="5" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.7"/>
+              <path d="M10 38 Q18 30 24 33 Q30 36 38 28" stroke="var(--primary)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+              <circle cx="33" cy="14" r="3" fill="var(--primary)" opacity="0.25"/>
+            </svg>
+            <span>施工写真</span>
+          </div>
+        </div>
         <div class="works-meta">
           <span class="works-label">店舗</span>
           <h3>商業施設 ショーウィンドウ<br>装飾・飛散防止フィルム施工</h3>
@@ -986,16 +1116,41 @@ footer {
      JAVASCRIPT
      ============================================================ -->
 <script>
-/* --- 1. 窓が開く演出 --- */
+/* --- 0. ハンバーガーメニュー --- */
+(function () {
+  const btn = document.getElementById('hamburgerBtn');
+  const nav = document.getElementById('mainNav');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('nav--open');
+    btn.setAttribute('aria-expanded', String(isOpen));
+  });
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      nav.classList.remove('nav--open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+
+/* --- 1. 窓が開く演出 + hero stagger --- */
 window.addEventListener('load', () => {
   const overlay = document.getElementById('window-overlay');
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     overlay.style.display = 'none';
+    document.querySelectorAll('.hero-stagger').forEach(el => el.classList.add('hero-stagger--in'));
     return;
   }
   requestAnimationFrame(() => { overlay.classList.add('open'); });
   overlay.addEventListener('animationend', (e) => {
-    if (e.target === overlay) overlay.style.display = 'none';
+    if (e.target === overlay) {
+      overlay.style.display = 'none';
+      const staggerEls = document.querySelectorAll('.hero-stagger');
+      staggerEls.forEach((el, i) => {
+        el.style.animationDelay = (i * 0.12) + 's';
+        el.classList.add('hero-stagger--in');
+      });
+    }
   });
 });
 
