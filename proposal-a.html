@@ -484,16 +484,20 @@ section { position: relative; z-index: 2; }
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px dashed var(--primary);
+  border: none;
   border-radius: 0;
   position: relative;
   overflow: hidden;
 }
-.works-thumb::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--primary-light) 0%, rgba(62,168,118,0.08) 100%);
+.works-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.works-card:hover .works-thumb img {
+  transform: scale(1.04);
 }
 .works-thumb-inner {
   position: relative;
@@ -974,17 +978,7 @@ footer {
     <div class="works-grid">
       <div class="works-card fade-up">
         <div class="works-thumb">
-          <div class="works-thumb-inner">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="6" y="6" width="36" height="36" rx="3" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.5"/>
-              <line x1="24" y1="6" x2="24" y2="42" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
-              <line x1="6" y1="24" x2="42" y2="24" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
-              <circle cx="24" cy="22" r="5" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.7"/>
-              <path d="M10 38 Q18 30 24 33 Q30 36 38 28" stroke="var(--primary)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
-              <circle cx="33" cy="14" r="3" fill="var(--primary)" opacity="0.25"/>
-            </svg>
-            <span>施工写真</span>
-          </div>
+          <img src="https://film.company-ecop.jp/wp-content/themes/theme_2025/img/CASE4-1.webp" alt="大型商業施設 遮熱フィルム施工">
         </div>
         <div class="works-meta">
           <span class="works-label">オフィスビル</span>
@@ -993,17 +987,7 @@ footer {
       </div>
       <div class="works-card fade-up">
         <div class="works-thumb">
-          <div class="works-thumb-inner">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="6" y="6" width="36" height="36" rx="3" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.5"/>
-              <line x1="24" y1="6" x2="24" y2="42" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
-              <line x1="6" y1="24" x2="42" y2="24" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
-              <circle cx="24" cy="22" r="5" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.7"/>
-              <path d="M10 38 Q18 30 24 33 Q30 36 38 28" stroke="var(--primary)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
-              <circle cx="33" cy="14" r="3" fill="var(--primary)" opacity="0.25"/>
-            </svg>
-            <span>施工写真</span>
-          </div>
+          <img src="https://film.company-ecop.jp/wp-content/themes/theme_2025/img/CASE1-1.webp" alt="タワーマンション UVカット・目隠しフィルム施工">
         </div>
         <div class="works-meta">
           <span class="works-label">住宅</span>
@@ -1012,17 +996,7 @@ footer {
       </div>
       <div class="works-card fade-up">
         <div class="works-thumb">
-          <div class="works-thumb-inner">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="6" y="6" width="36" height="36" rx="3" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.5"/>
-              <line x1="24" y1="6" x2="24" y2="42" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
-              <line x1="6" y1="24" x2="42" y2="24" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
-              <circle cx="24" cy="22" r="5" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.7"/>
-              <path d="M10 38 Q18 30 24 33 Q30 36 38 28" stroke="var(--primary)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
-              <circle cx="33" cy="14" r="3" fill="var(--primary)" opacity="0.25"/>
-            </svg>
-            <span>施工写真</span>
-          </div>
+          <img src="https://film.company-ecop.jp/wp-content/themes/theme_2025/img/ECOP5.webp" alt="ホテル 装飾・飛散防止フィルム施工">
         </div>
         <div class="works-meta">
           <span class="works-label">店舗</span>
